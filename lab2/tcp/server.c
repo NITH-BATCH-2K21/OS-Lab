@@ -1,3 +1,13 @@
+/*
+If a server is implemented with many child processes to handle the incomming client requests using the fork() system call,
+make sure to use write() function instead of the printf() function. printf() is buffered, it groups the outputs of a process
+and then prints out on the monitor. So, if a child process also uses printf along with it's parent, both the outputs could
+get mixed up in wierd ways. So use the unbuffered write() function
+More - http://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/create.html
+
+*/
+
+
 #include<stdio.h>
 #include<sys/socket.h> 
 #include<sys/types.h>
