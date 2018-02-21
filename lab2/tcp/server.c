@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<sys/socket.h>
+#include<sys/socket.h> 
 #include<sys/types.h>
 #include<stdlib.h>
 #include<string.h>
@@ -17,10 +17,11 @@ int main()
 
 
 	/* this structure contains information about server's address. The fields in it are:(sin = short int)
-	1. sin_address : families of addresses - AF_INET(internet), AF_UNIX, etc
-	2. sin_port : 16 byte service port number in Network Byte order
-	3. sin_addr : 32 byte IP address in Network Byte order.
-	3. unsigned char sin_zero[8] - set it to NULL, it's not being used
+	1. sin_address : families of addresses - AF_INET(IPv4), AF_UNIX, AF_INET6(IPv6), etc
+	2. sin_port : 16 byte service port number in Network Byte order - use htons() function to convert to Network Byte order
+	3. sin_addr : 32 byte IP address in Network Byte order, use INADDR_ANY to bind to Local Host(127.0.0.1)
+	3. unsigned char sin_zero[8] - set it to NULL, it's not being used. Set the whole structure to NULL initially using bzero()
+	bzero((char *) &serv_addr, sizeof(serv_addr));
 	*/
 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); // socket(int domain, int type, int protocol)
@@ -49,7 +50,7 @@ int main()
 
 	serv_addr.sin_port = htons(portno);
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_addr.s_addr = INADDR_ANY;
+	serv_addr.sin_addr.s_addr = INADDR_ANY; // special format than the other fields !! - IMP
 	/*
 	1. INADDR_ANY is a constant with value = 0. It's used to set the machine to listen/bind at all local interfaces of host 
 	machines IP address.
