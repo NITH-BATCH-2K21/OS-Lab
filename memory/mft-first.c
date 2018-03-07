@@ -81,16 +81,16 @@ void sched()
 
 	for(i=1;i<=num_process;++i)
 	{
-		int best = 10000, pos = -1;
+		int pos = -1;
 		for(j=1;j<=num_partitions;++j)
 		{
 			if(part[j].alloc)
 				continue;
 
-			if(part[j].size >= proc[i].size && part[j].size < best)
+			if(part[j].size >= proc[i].size)
 			{
-				best = part[j].size;
 				pos = j;
+				break;
 			}
 		}
 
@@ -118,16 +118,16 @@ void first_sched()
 	int i, j;
 	for(i=1;i<=num_process;++i)
 	{
-		int best = 100000, pos = -1;
+		int pos = -1;
 		for(j=1;j<=num_partitions;++j)
 		{
 			if(part[j].alloc)
 				continue;
 
-			if(part[j].size >= proc[i].size && part[j].size < best)
+			if(part[j].size >= proc[i].size)
 			{
-				best = part[j].size;
 				pos = j;
+				break;
 			}
 		}
 

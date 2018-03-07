@@ -81,13 +81,13 @@ void sched()
 
 	for(i=1;i<=num_process;++i)
 	{
-		int best = 10000, pos = -1;
+		int best = -1, pos = -1;
 		for(j=1;j<=num_partitions;++j)
 		{
 			if(part[j].alloc)
 				continue;
 
-			if(part[j].size >= proc[i].size && part[j].size < best)
+			if(part[j].size >= proc[i].size && part[j].size > best)
 			{
 				best = part[j].size;
 				pos = j;
@@ -118,13 +118,13 @@ void first_sched()
 	int i, j;
 	for(i=1;i<=num_process;++i)
 	{
-		int best = 100000, pos = -1;
+		int best = -1, pos = -1;
 		for(j=1;j<=num_partitions;++j)
 		{
 			if(part[j].alloc)
 				continue;
 
-			if(part[j].size >= proc[i].size && part[j].size < best)
+			if(part[j].size >= proc[i].size && part[j].size > best)
 			{
 				best = part[j].size;
 				pos = j;
@@ -175,9 +175,9 @@ void sched_mod(int c, int tbs)
 	}
 	else
 		sched();
+	// if the size requirement isn't satisfied, call the complete scheduling procedure again
 	disp_proc();
 	disp();
-	// if the size requirement isn't satisfied, call the complete scheduling procedure again
 }
 
 int main()
